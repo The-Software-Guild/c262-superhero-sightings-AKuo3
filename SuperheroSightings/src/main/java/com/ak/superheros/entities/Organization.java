@@ -1,5 +1,6 @@
 package com.ak.superheros.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Organization{
@@ -7,6 +8,7 @@ public class Organization{
     private String name;
     private String description;
     private String address;
+    private List<Superhero> members;
 
 
     public int getId(){
@@ -41,6 +43,14 @@ public class Organization{
         this.address = address;
     }
 
+    public List<Superhero> getMembers(){
+        return members;
+    }
+
+    public void setMembers(List<Superhero> members){
+        this.members = members;
+    }
+
     @Override
     public boolean equals(Object o){
         if(this == o){
@@ -50,11 +60,11 @@ public class Organization{
             return false;
         }
         Organization that = (Organization) o;
-        return id == that.id && name.equals(that.name) && Objects.equals(description, that.description) && address.equals(that.address);
+        return id == that.id && name.equals(that.name) && Objects.equals(description, that.description) && address.equals(that.address) && Objects.equals(members, that.members);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(id, name, description, address);
+        return Objects.hash(id, name, description, address, members);
     }
 }

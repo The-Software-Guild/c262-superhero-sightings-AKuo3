@@ -17,7 +17,7 @@ create table superhero(
     power varchar(30) not null
 );
 
-create table superhero_orgs(
+create table superhero_org(
 	superheroId int not null,
     orgId int not null,
     primary key (superheroId, orgId),
@@ -35,10 +35,10 @@ create table location(
 );
 
 create table sighting(
+	id int primary key auto_increment,
 	superheroId int not null,
     locationId int not null,
     sightingDate date not null,
-    primary key (superheroId, locationId),
     foreign key (superheroId) references superhero(id),
     foreign key (locationId) references location(id)
 );
@@ -65,7 +65,7 @@ create table superhero(
     power varchar(30) not null
 );
 
-create table superhero_orgs(
+create table superhero_org(
 	superheroId int not null,
     orgId int not null,
     primary key (superheroId, orgId),
@@ -83,10 +83,10 @@ create table location(
 );
 
 create table sighting(
+	id int primary key auto_increment,
 	superheroId int not null,
     locationId int not null,
     sightingDate date not null,
-    primary key (superheroId, locationId),
     foreign key (superheroId) references superhero(id),
     foreign key (locationId) references location(id)
 );
