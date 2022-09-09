@@ -9,7 +9,7 @@ public interface SightingDao{
     Sighting getSightingByDate(Date date);
     Sighting getSightingById(int id);
     List<Sighting> getAllSightings();
-    void addSighting(Sighting sighting);
+    Sighting addSighting(Sighting sighting);
     void updateSighting(Sighting sighting);
     void deleteSighting(int id);
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -57,18 +58,26 @@ public class SightingDaoDB implements SightingDao{
     }
 
     @Override
-    public void addSighting(Sighting sighting){
-
+    @Transactional
+    public Sighting addSighting(Sighting sighting){
+        final String ADD_SIGHTING = "INSERT INTO sighting (superheroId, locationId, sightingDate) VALUES (?, ?, ?)";
+        jdbc.update(ADD_SIGHTING, sighting.getSuperheroId(), sighting.getLocationId(), sighting.getDate());
+        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        sighting.setId(newId);
+        return sighting;
     }
 
     @Override
     public void updateSighting(Sighting sighting){
-
+        final String UPDATE_SIGHTING = "UPDATE sighting SET superheroId = ?, locationId = ?, sightingDate = ? WHERE id = ?";
+        jdbc.update(UPDATE_SIGHTING, sighting.getSuperheroId(), sighting.getLocationId(), sighting.getDate(), sighting.getId());
     }
 
     @Override
+    @Transactional
     public void deleteSighting(int id){
-
+        final String DELETE_SIGHTING = "DELETE FROM sighting WHERE id = ?";
+        jdbc.update(DELETE_SIGHTING, id);
     }
 
     private Superhero associateIdWithSuperhero(int id){

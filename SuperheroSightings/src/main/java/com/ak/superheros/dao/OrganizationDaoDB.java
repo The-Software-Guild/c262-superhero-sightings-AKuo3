@@ -22,7 +22,9 @@ public class OrganizationDaoDB implements OrganizationDao{
     public Organization getOrgById(int id){
         try{
             final String GET_ORG_BY_ID = "SELECT * FROM organization WHERE id = ?";
-            return jdbc.queryForObject(GET_ORG_BY_ID, new OrganizationMapper(), id);
+            Organization org = jdbc.queryForObject(GET_ORG_BY_ID, new OrganizationMapper(), id);
+            org.setMembers(getSuperheroesFromOrgId(id));
+            return org;
         }
         catch(DataAccessException e){
             return null;
@@ -42,13 +44,19 @@ public class OrganizationDaoDB implements OrganizationDao{
         jdbc.update(INSERT_ORG, org.getName(), org.getDescription(), org.getAddress());
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         org.setId(newId);
+        insertSuperheroOrgs(org);
         return org;
     }
 
     @Override
+    @Transactional
     public void updateOrg(Organization org){
         final String UPDATE_ORG = "UPDATE organization SET name = ?, description = ?, address = ? WHERE id = ?";
         jdbc.update(UPDATE_ORG, org.getName(), org.getDescription(), org.getAddress(), org.getId());
+
+        final String DELETE_SUPERHERO_ORG = "DELETE FROM superhero_org WHERE orgId = ?";
+        jdbc.update(DELETE_SUPERHERO_ORG, org.getId());
+        insertSuperheroOrgs(org);
     }
 
     @Override
@@ -68,6 +76,20 @@ public class OrganizationDaoDB implements OrganizationDao{
         List<Organization> orgs = jdbc.query(SELECT_ORGS_FOR_SUPERHERO, new OrganizationMapper(),
                 superhero.getId());
         return orgs;
+    }
+
+    private void insertSuperheroOrgs(Organization org){
+        final String INSERT_SUPERHERO_ORGS = "INSERT INTO superhero_org(superheroId, orgId) VALUES (?, ?)";
+        for(Superhero hero : org.getMembers()){
+            jdbc.update(INSERT_SUPERHERO_ORGS, hero.getId(), org.getId());
+        }
+    }
+
+    private List<Superhero> getSuperheroesFromOrgId(int id){
+        final String SELECT_SUPERHEROES_FROM_ORG = "SELECT s.* FROM superhero s JOIN " +
+                "superhero_org so ON so.superheroId = s.id WHERE so.orgId = ?";
+        List<Superhero> superheroes = jdbc.query(SELECT_SUPERHEROES_FROM_ORG, new SuperheroDaoDB.SuperheroMapper(), id);
+        return superheroes;
     }
 
     public static final class OrganizationMapper implements RowMapper<Organization>{
