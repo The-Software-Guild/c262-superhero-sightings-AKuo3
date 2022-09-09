@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 public class SuperheroDaoDB implements SuperheroDao{
     @Autowired
     JdbcTemplate jdbc;
@@ -37,7 +39,7 @@ public class SuperheroDaoDB implements SuperheroDao{
     @Override
     @Transactional
     public Superhero addSuperhero(Superhero superhero){
-        final String ADD_SUPERHERO = "INSERT INTO superhero(name, description, power), values (?, ?, ?)";
+        final String ADD_SUPERHERO = "INSERT INTO superhero(name, description, power) values (?, ?, ?)";
         jdbc.update(ADD_SUPERHERO, superhero.getName(), superhero.getDescription(), superhero.getPower());
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         superhero.setId(newId);

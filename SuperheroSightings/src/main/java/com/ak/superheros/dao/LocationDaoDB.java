@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 public class LocationDaoDB implements LocationDao{
     @Autowired
     JdbcTemplate jdbc;
@@ -37,7 +39,7 @@ public class LocationDaoDB implements LocationDao{
     @Override
     @Transactional
     public Location addLocation(Location location){
-        final String ADD_LOCATION = "INSERT INTO location(name, description, address, latitude, longitude " +
+        final String ADD_LOCATION = "INSERT INTO location(name, description, address, latitude, longitude) " +
                 "VALUES (?, ?, ?, ?, ?)";
         jdbc.update(ADD_LOCATION, location.getName(), location.getDescription(), location.getAddress(), location.getLatitude(), location.getLongitude());
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
