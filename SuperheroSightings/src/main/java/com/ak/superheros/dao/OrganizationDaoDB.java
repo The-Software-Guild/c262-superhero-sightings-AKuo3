@@ -62,7 +62,7 @@ public class OrganizationDaoDB implements OrganizationDao{
     @Override
     @Transactional
     public void deleteOrg(int id){
-        final String DELETE_SUPERHERO_ORGS = "DELETE FROM superhero_org WHERE id = ?";
+        final String DELETE_SUPERHERO_ORGS = "DELETE FROM superhero_org WHERE orgId = ?";
         jdbc.update(DELETE_SUPERHERO_ORGS, id);
 
         final String DELETE_ORG = "DELETE FROM organization WHERE id = ?";

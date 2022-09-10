@@ -63,7 +63,7 @@ public class OrganizationController{
         List<Superhero> superheroes = superheroDao.getAllSuperheroes();
         model.addAttribute("organization", org);
         model.addAttribute("superheroes", superheroes);
-        return "editCourse";
+        return "editOrganization";
     }
 
     @PostMapping("editOrganization")

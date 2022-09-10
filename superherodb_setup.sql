@@ -6,14 +6,14 @@ use superherodb;
 create table organization(
 	id int primary key auto_increment,
     name varchar(30) not null,
-    description varchar(30),
-    address varchar(30) not null
+    description varchar(50),
+    address varchar(50) not null
 );
 
 create table superhero(
 	id int primary key auto_increment,
     name varchar(30) not null,
-    description varchar(30),
+    description varchar(50),
     power varchar(30) not null
 );
 
@@ -28,8 +28,8 @@ create table superhero_org(
 create table location(
 	id int primary key auto_increment,
     name varchar(30) not null,
-    description varchar(30),
-    address varchar(30) not null,
+    description varchar(50),
+    address varchar(50) not null,
     latitude float not null,
     longitude float not null
 );
@@ -54,14 +54,14 @@ use superherodbtest;
 create table organization(
 	id int primary key auto_increment,
     name varchar(30) not null,
-    description varchar(30),
-    address varchar(30) not null
+    description varchar(50),
+    address varchar(50) not null
 );
 
 create table superhero(
 	id int primary key auto_increment,
     name varchar(30) not null,
-    description varchar(30),
+    description varchar(50),
     power varchar(30) not null
 );
 
@@ -76,8 +76,8 @@ create table superhero_org(
 create table location(
 	id int primary key auto_increment,
     name varchar(30) not null,
-    description varchar(30),
-    address varchar(30) not null,
+    description varchar(50),
+    address varchar(50) not null,
     latitude float not null,
     longitude float not null
 );

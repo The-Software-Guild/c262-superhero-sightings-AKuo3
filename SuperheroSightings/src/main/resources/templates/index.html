@@ -34,12 +34,10 @@
     </div>
   </div>
 
-
   <div class="row m-4 border border-dark">
     <div class="col text-center m-3">
       <table class="table table-striped">
         <thead>
-        <tr><th colspan="3">Latest Sightings</th></tr>
         <tr>
           <th>Superhero</th>
           <th>Location</th>
@@ -48,14 +46,15 @@
         </thead>
         <tbody>
         <tr th:each="sighting : ${sightings}">
-          <td th:text="${sighting.superhero}">Superhero</td>
-          <td th:text="${teacher.location}">Location</td>
-          <td th:text="${teacher.Date}">Date</td>
+          <td th:text="${sighting.superhero.name}">Superhero Name</td>
+          <td th:text="${sighting.location.name}">Location Name</td>
+          <td th:text="${sighting.date}">Date</td>
         </tr>
         </tbody>
       </table>
     </div>
   </div>
+
 </div>
 
 <!-- End main body -->

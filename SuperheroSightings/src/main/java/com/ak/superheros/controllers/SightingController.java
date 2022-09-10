@@ -62,18 +62,18 @@ public class SightingController{
     }
 
     @GetMapping("editSighting")
-    public String editCourse(Integer id, Model model){
-        List<Sighting> sightings = sightingDao.getAllSightings();
+    public String editSighting(Integer id, Model model){
+        Sighting sighting = sightingDao.getSightingById(id);
         List<Location> locations = locationDao.getAllLocations();
         List<Superhero> superheroes = superheroDao.getAllSuperheroes();
-        model.addAttribute("sightings", sightings);
+        model.addAttribute("sighting", sighting);
         model.addAttribute("locations", locations);
         model.addAttribute("superheroes", superheroes);
         return "editSighting";
     }
 
     @PostMapping("editSighting")
-    public String performEditCourse(Sighting sighting, HttpServletRequest request){
+    public String performEditSighting(Sighting sighting, HttpServletRequest request){
         String superheroId = request.getParameter("superheroId");
         String locationId = request.getParameter("locationId");
 
