@@ -20,6 +20,7 @@ public class SightingDaoDB implements SightingDao{
     @Autowired
     JdbcTemplate jdbc;
 
+    //TODO: fix, returns null
     @Override
     public Sighting getSightingByDate(Date date){
         try{
