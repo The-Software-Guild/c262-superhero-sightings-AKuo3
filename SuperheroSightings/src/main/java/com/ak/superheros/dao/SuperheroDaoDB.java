@@ -68,7 +68,7 @@ public class SuperheroDaoDB implements SuperheroDao{
     @Override
     public List<Superhero> getSuperheroesFromLocation(Location location){
         final String SELECT_SUPERHEROES_FROM_LOCATION = "SELECT s.* FROM superhero s JOIN " +
-                "sighting s ON s.superheroId = s.id WHERE s.locationId = ?";
+                "sighting si ON si.superheroId = s.id WHERE si.locationId = ?";
         List<Superhero> superheroes = jdbc.query(SELECT_SUPERHEROES_FROM_LOCATION, new SuperheroMapper(), location.getId());
         return superheroes;
     }
